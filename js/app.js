@@ -4,6 +4,15 @@ var Enemy = function() {
     // we've provided one for you to get started
     this.x = 0;
     this.y = (83 - 35);
+    this.speed = 0;
+    var rnd = Math.random();
+    if(rnd < 0.33) {
+        this.y = (83 - 35);
+    } else if (rnd >= 0.33 && rnd < 0.66) {
+        this.y = (83 - 35) + 83;
+    } else {
+        this.y = (83 - 35) + (83 * 2);
+    }
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -15,6 +24,7 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.x += this.speed * dt;
 };
 
 // Draw the enemy on the screen, required method for game
