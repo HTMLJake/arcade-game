@@ -1,14 +1,19 @@
 // Enemies our player must avoid
+var score = 0;
+
+function updateScore() {
+    score += 5;
+    console.log(score);
+}
+
 var Enemy = function () {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
     this.x = -101;
     this.y = (83 - 35);
     this.speed = 0;
+    
     this.setEnemySpawn();
+
     this.width = 90;
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
 };
 
@@ -43,9 +48,6 @@ Enemy.prototype.update = function (dt) {
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    /* ctx.beginPath();
-    ctx.rect(this.x, this.y + 83, 90, 90);
-    ctx.stroke(); */
 };
 
 // Now write your own player class
@@ -63,19 +65,24 @@ player.prototype.update = function (dt) {
     //console.log(this.left, this.right)
     if (this.y == -35) {
         this.resetPlayer();
+        updateScore();
     }
 };
 
 player.prototype.resetPlayer = function() {
     this.y = 380;
     this.x = 202;
+};
+
+player.prototype.decreaseScore = function() {
+    score = (score - 2) < 0 ? 0 : score - 2;
 }
 
 player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    /* ctx.beginPath();
-    ctx.rect(this.x + 10, this.y + 93, 80, 70);
-    ctx.stroke(); */
+
+    ctx.font = "30px Arial";
+    ctx.fillText(`score: ${score}`, 202, 40);
 
 };
 

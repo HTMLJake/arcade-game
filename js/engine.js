@@ -87,10 +87,10 @@ var Engine = (function(global) {
         allEnemies.forEach(function (enemy) {
             if
             ( (enemy.x + enemy.width) > player.left  && 
-              (enemy.x + 5) < player.right && 
+              (enemy.x + 20) < player.right && 
                enemy.y == player.y ) {
-                //console.log("HIT!");
                 player.resetPlayer();
+                player.decreaseScore();
             }
         });
     }
