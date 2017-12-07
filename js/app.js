@@ -82,7 +82,7 @@ player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
     ctx.font = "30px Arial";
-    ctx.fillText(`score: ${score}`, 202, 40);
+    ctx.fillText("score: " + score, 202, 40);
 
 };
 
