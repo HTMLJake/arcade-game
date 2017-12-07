@@ -69,6 +69,11 @@ var player = function () {
     this.left = this.x + 10;
     this.right = this.x + 10 + this.width;
     this.num = Math.round((Math.random() * 100) % charSprites.length);
+    if (this.num > 3) {
+        this.num = 3;
+    } else if(this.num < 0) {
+        this.num = 0;
+    }
     this.sprite = charSprites[this.num];
 }
 player.prototype.update = function (dt) {
@@ -88,7 +93,9 @@ player.prototype.resetPlayer = function() {
 };
 
 player.prototype.Death = function() {
-    score = (score - 2) < 0 ? 0 : score - 2;
+    if(this.isAlive){
+        score = (score - 2) < 0 ? 0 : score - 2;
+    }
     charSprites.pop();
     if(charSprites.length !== 0) {
         this.resetPlayer();
@@ -158,6 +165,9 @@ $('.reset').click(function() {
 
 
 function showModal() {
+
+    $('#score').text(score);
+
     $('.modal').dialog({
         modal: true,
         maxWidth: 500,
@@ -169,7 +179,10 @@ function showModal() {
                 "images/char-horn-girl.png", 
                 "images/char-pink-girl.png"
             ];
-            console.log(charSprites.length)
+            score = 0;
+            allEnemies.forEach(Enemy => {
+                Enemy.setEnemySpawn();
+            });
             player.resetPlayer();
             player.isAlive = true;
         }
