@@ -1,6 +1,28 @@
-frontend-nanodegree-arcade-game
-===============================
+# Frogger Clone
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+## Table of Contents
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+* [Introduction](#introduction)
+* [About](#about)
+* [Contributing](#contributing)
+* [TODO](#todo)
+
+
+## Introduction
+
+This game was made for the Udacity Front-End nanodegree program. To learn more visit [Udacity.com](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001)
+
+## About 
+
+This game is a frogger clone. The goal is to get your character from the bottom of the screen to the water at the top. Each time you get a character to the water you will get 5 points. If you run into one of the bugs you will loose 2 points and 1 life. You have 4 lives, once you are out of lives its game over. Try to get as many points as you can before you run out of lives.
+
+## Contributing
+
+Since this was made for a project I will not be taking any contributions to this project.
+
+## TODO
+
+* Add more enemies the higher the score gets or the more times you get to the water
+* Add Collectables that give you more points.
+* Add hearts that give you back lives
+* Show current lives
