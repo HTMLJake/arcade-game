@@ -1,3 +1,26 @@
 body {
     text-align: center;
 }
+
+.modal {
+    align-content: center;
+    text-align: center;
+    display: none;
+    background-color: #fff;
+}
+
+.ui-dialog{
+    display: flex;
+    flex-direction: column;
+}
+
+.ui-button {
+    display: none;
+}
+
+.reset {
+    background-color: #00aaff;
+    color: #f1f1f1;
+    margin: 15px;
+    padding: 10px;
+}

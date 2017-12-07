@@ -89,8 +89,7 @@ var Engine = (function(global) {
             ( (enemy.x + enemy.width) > player.left  && 
               (enemy.x + 20) < player.right && 
                enemy.y == player.y ) {
-                player.resetPlayer();
-                player.decreaseScore();
+                player.Death();
             }
         });
     }
@@ -185,7 +184,10 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-pink-girl.png'
     ]);
     Resources.onReady(init);
 

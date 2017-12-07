@@ -6,6 +6,13 @@ function updateScore() {
     console.log(score);
 }
 
+var charSprites = [
+    "images/char-boy.png", 
+    "images/char-cat-girl.png", 
+    "images/char-horn-girl.png", 
+    "images/char-pink-girl.png"
+];
+
 var Enemy = function () {
     this.x = -101;
     this.y = (83 - 35);
@@ -38,8 +45,9 @@ Enemy.prototype.update = function (dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    e = this;
-    this.x += this.speed * dt;
+    if(player.isAlive) {
+        this.x += this.speed * dt;
+    }
     if (this.x > 505) {
         this.setEnemySpawn();
     }
@@ -54,12 +62,14 @@ Enemy.prototype.render = function () {
 // This class requires an update(), render() and
 // a handleInput() method.
 var player = function () {
+    this.isAlive = true;
     this.x = 0 + (101 * 2);
     this.y = 380;
     this.width = 80;
     this.left = this.x + 10;
     this.right = this.x + 10 + this.width;
-    this.sprite = 'images/char-boy.png';
+    this.num = Math.round((Math.random() * 100) % charSprites.length);
+    this.sprite = charSprites[this.num];
 }
 player.prototype.update = function (dt) {
     //console.log(this.left, this.right)
@@ -72,14 +82,26 @@ player.prototype.update = function (dt) {
 player.prototype.resetPlayer = function() {
     this.y = 380;
     this.x = 202;
+    this.num = Math.round((Math.random() * 100)) % charSprites.length;
+    console.log(this.num);
+    this.sprite = charSprites[this.num];
 };
 
-player.prototype.decreaseScore = function() {
+player.prototype.Death = function() {
     score = (score - 2) < 0 ? 0 : score - 2;
+    charSprites.pop();
+    if(charSprites.length !== 0) {
+        this.resetPlayer();
+    } else {
+        showModal();
+        this.isAlive = false;
+    }
 }
 
 player.prototype.render = function () {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    if(this.isAlive) {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
 
     ctx.font = "30px Arial";
     ctx.fillText("score: " + score, 202, 40);
@@ -87,21 +109,23 @@ player.prototype.render = function () {
 };
 
 player.prototype.handleInput = function (keyCode) {
-    switch (keyCode) {
-        case "left":
-            this.x = (this.x - 101) >= 0 ? this.x - 101 : this.x - 0;
-            break;
-        case "right":
-            this.x = (this.x +101) < 505 ? this.x + 101 : this.x + 0;
-            break;
-        case "up":
-            this.y -= 83;
-            break;
-        case "down":
-            this.y = this.y + 83 <= 380 ? this.y + 83 : this.y + 0;
-            break;
-        default:
-            break;
+    if(this.isAlive) {
+        switch (keyCode) {
+            case "left":
+                this.x = (this.x - 101) >= 0 ? this.x - 101 : this.x - 0;
+                break;
+            case "right":
+                this.x = (this.x +101) < 505 ? this.x + 101 : this.x + 0;
+                break;
+            case "up":
+                this.y -= 83;
+                break;
+            case "down":
+                this.y = this.y + 83 <= 380 ? this.y + 83 : this.y + 0;
+                break;
+            default:
+                break;
+        }
     }
     this.left = this.x + 10;
     this.right = this.x + 10 + this.width;
@@ -127,3 +151,27 @@ document.addEventListener('keyup', function (e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+$('.reset').click(function() {
+    $('.modal').dialog("close");
+})
+
+
+function showModal() {
+    $('.modal').dialog({
+        modal: true,
+        maxWidth: 500,
+        maxHeight: 500,
+        close: function() {
+            charSprites = [
+                "images/char-boy.png", 
+                "images/char-cat-girl.png", 
+                "images/char-horn-girl.png", 
+                "images/char-pink-girl.png"
+            ];
+            console.log(charSprites.length)
+            player.resetPlayer();
+            player.isAlive = true;
+        }
+    });
+}
