@@ -1,10 +1,4 @@
-// Enemies our player must avoid
-var score = 0;
-
-function updateScore() {
-    score += 5;
-    console.log(score);
-}
+"use strict";
 
 var charSprites = [
     "images/char-boy.png", 
@@ -42,9 +36,6 @@ Enemy.prototype.setEnemySpawn = function () {
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function (dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
     if(player.isAlive) {
         this.x += this.speed * dt;
     }
@@ -61,7 +52,8 @@ Enemy.prototype.render = function () {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var player = function () {
+var Player = function () {
+    this.score = 0;
     this.isAlive = true;
     this.x = 0 + (101 * 2);
     this.y = 380;
@@ -75,16 +67,21 @@ var player = function () {
         this.num = 0;
     }
     this.sprite = charSprites[this.num];
-}
-player.prototype.update = function (dt) {
+};
+Player.prototype.update = function (dt) {
     //console.log(this.left, this.right)
     if (this.y == -35) {
         this.resetPlayer();
-        updateScore();
+        this.updateScore();
     }
 };
 
-player.prototype.resetPlayer = function() {
+Player.prototype.updateScore = function () {
+    this.score += 5;
+    console.log(this.score);
+};
+
+Player.prototype.resetPlayer = function() {
     this.y = 380;
     this.x = 202;
     this.num = Math.round((Math.random() * 100)) % charSprites.length;
@@ -92,9 +89,9 @@ player.prototype.resetPlayer = function() {
     this.sprite = charSprites[this.num];
 };
 
-player.prototype.Death = function() {
+Player.prototype.Death = function() {
     if(this.isAlive){
-        score = (score - 2) < 0 ? 0 : score - 2;
+        this.score = (this.score - 2) < 0 ? 0 : this.score - 2;
     }
     charSprites.pop();
     if(charSprites.length !== 0) {
@@ -103,19 +100,19 @@ player.prototype.Death = function() {
         showModal();
         this.isAlive = false;
     }
-}
+};
 
-player.prototype.render = function () {
+Player.prototype.render = function () {
     if(this.isAlive) {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
     ctx.font = "30px Arial";
-    ctx.fillText("score: " + score, 202, 40);
+    ctx.fillText("score: " + this.score, 202, 40);
 
 };
 
-player.prototype.handleInput = function (keyCode) {
+Player.prototype.handleInput = function (keyCode) {
     if(this.isAlive) {
         switch (keyCode) {
             case "left":
@@ -136,14 +133,14 @@ player.prototype.handleInput = function (keyCode) {
     }
     this.left = this.x + 10;
     this.right = this.x + 10 + this.width;
-}
+};
 
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var allEnemies = [new Enemy(), new Enemy(), new Enemy(), new Enemy()];
-var player = new player();
+var player = new Player();
 
 
 // This listens for key presses and sends the keys to your
@@ -161,12 +158,12 @@ document.addEventListener('keyup', function (e) {
 
 $('.reset').click(function() {
     $('.modal').dialog("close");
-})
+});
 
 
 function showModal() {
 
-    $('#score').text(score);
+    $('#score').text(player.score);
 
     $('.modal').dialog({
         modal: true,
@@ -179,7 +176,7 @@ function showModal() {
                 "images/char-horn-girl.png", 
                 "images/char-pink-girl.png"
             ];
-            score = 0;
+            player.score = 0;
             allEnemies.forEach(Enemy => {
                 Enemy.setEnemySpawn();
             });
