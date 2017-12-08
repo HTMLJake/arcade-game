@@ -4,6 +4,7 @@
 
 * [Introduction](#introduction)
 * [About](#about)
+* [Instructions](#instructions)
 * [Contributing](#contributing)
 * [TODO](#todo)
 
@@ -12,9 +13,13 @@
 
 This game was made for the Udacity Front-End nanodegree program. To learn more visit [Udacity.com](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001)
 
-## About 
+## About
 
 This game is a frogger clone. The goal is to get your character from the bottom of the screen to the water at the top. Each time you get a character to the water you will get 5 points. If you run into one of the bugs you will loose 2 points and 1 life. You have 4 lives, once you are out of lives its game over. Try to get as many points as you can before you run out of lives.
+
+## Instructions
+
+Open the `index.html` file with a modern browser like *Google Chome* or *Mozilla Firefox* to run the game. Use the arrow keys to move around the game board.
 
 ## Contributing
 
